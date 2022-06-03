@@ -5,6 +5,7 @@ export const getMovieList = async ({searchValue}) => {
     const response = await client.get('/', {
       params: {
         s: searchValue,
+        page: 1,
       },
     });
     const {data} = response;

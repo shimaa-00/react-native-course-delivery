@@ -11,7 +11,7 @@ export const Input = ({value, onChangeText, right, left}) => {
         value={value}
         onChangeText={onChangeText}
         style={styles.inputContainer}
-        placeholder={'Enter Movie Name ..'}
+        placeholder={'Enter Movie ...'}
         placeholderTextColor={COLORS.sun}
       />
       {right}

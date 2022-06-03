@@ -7,6 +7,7 @@ import {
   FlatList,
   ScrollView,
 } from 'react-native';
+import Pagination, {Dot} from 'react-native-pagination'; //{Icon,Dot} also available
 import Icon from 'react-native-vector-icons/Entypo';
 import {getMovieList} from '../../api/movie';
 import {Header, Input, MovieCard} from '../../components';
@@ -21,7 +22,6 @@ export const SearchScreen = () => {
     const _data = await getMovieList({searchValue: value});
     setData(_data);
   };
-
   const renderItem = ({item}) => {
     return (
       <MovieCard
@@ -31,19 +31,26 @@ export const SearchScreen = () => {
       />
     );
   };
+  // const onViewableItemsChanged = ({viewableItems, changed}) =>
+  //   this.setState({viewableItems});
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={data}
+        // ref={r => (this.refs = r)} //create refrence point to enable scrolling
         contentContainerStyle={styles.contentContainer}
         renderItem={renderItem}
+        // onViewableItemsChanged={this.onViewableItemsChanged} //need this
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
             <Input
               value={value}
-              onChangeText={_value => setValue(_value)}
+              onChangeText={_value => {
+                setValue(_value);
+                onPressSearch();
+              }}
               right={
                 <Pressable
                   style={styles.searchIconContainer}
