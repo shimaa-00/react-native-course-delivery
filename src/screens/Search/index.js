@@ -13,14 +13,14 @@ import {getMovieList} from '../../api/movie';
 import {Header, Input, MovieCard} from '../../components';
 import {COLORS} from '../../theme';
 import styles from './styles';
-
 export const SearchScreen = () => {
   const [value, setValue] = useState('');
   const [data, setData] = useState([]);
-
+  var pageNum = 1;
   const onPressSearch = async () => {
-    const _data = await getMovieList({searchValue: value});
-    setData(_data);
+    const _data = await getMovieList({searchValue: value, pageNumber: pageNum});
+    data.push(..._data);
+    setData(data);
   };
   const renderItem = ({item}) => {
     return (
@@ -31,17 +31,18 @@ export const SearchScreen = () => {
       />
     );
   };
-  // const onViewableItemsChanged = ({viewableItems, changed}) =>
-  //   this.setState({viewableItems});
-
+  const loadMoreItems = () => {
+    pageNum++;
+    onPressSearch();
+  };
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
         data={data}
-        // ref={r => (this.refs = r)} //create refrence point to enable scrolling
+        onEndReached={loadMoreItems}
+        onEndReachedThreshold={0}
         contentContainerStyle={styles.contentContainer}
         renderItem={renderItem}
-        // onViewableItemsChanged={this.onViewableItemsChanged} //need this
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={
           <>
@@ -49,6 +50,7 @@ export const SearchScreen = () => {
               value={value}
               onChangeText={_value => {
                 setValue(_value);
+                pageNum = 1;
                 onPressSearch();
               }}
               right={

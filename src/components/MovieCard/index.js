@@ -1,6 +1,7 @@
 import React from 'react';
 import {Text, View} from 'react-native';
 import FastImage from 'react-native-fast-image';
+import ActivityIndicatorViewNativeComponent from 'react-native/Libraries/Components/ActivityIndicator/ActivityIndicatorViewNativeComponent';
 import styles from './styles';
 
 export const MovieCard = ({title, releaseDate, imageUrl}) => {
