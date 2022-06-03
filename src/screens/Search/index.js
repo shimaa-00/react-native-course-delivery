@@ -50,6 +50,7 @@ export const SearchScreen = () => {
               value={value}
               onChangeText={_value => {
                 setValue(_value);
+                setData([]);
                 pageNum = 1;
                 onPressSearch();
               }}
